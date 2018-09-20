@@ -23,6 +23,7 @@ const {registerFont, createCanvas} = require('canvas');
  * @param [options.localFontPath] path to local font (e.g. fonts/Lobster-Regular.ttf)
  * @param [options.localFontName] name of local font (e.g. Lobster)
  * @param [options.output='buffer'] 'buffer', 'stream', 'dataURL', 'canvas's
+ * @param [options.maxWidth] max width for the bounding rect
  * @returns {string} png image buffer
  */
 const text2png = (text, options = {}) => {
@@ -65,7 +66,7 @@ const text2png = (text, options = {}) => {
 
   const lineHeight = max.ascent + max.descent + options.lineSpacing;
 
-  const contentWidth = max.left + max.right;
+  const contentWidth = options.maxWidth || (max.left + max.right);
   const contentHeight = lineHeight * lineProps.length
     - options.lineSpacing
     - (max.descent - lastDescent);
